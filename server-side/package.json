@@ -1,0 +1,9 @@
+{
+    "name": "socket-chat-example",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "^4.17.1",
+        "matter-js": "^0.14.2",
+        "socket.io": "^2.3.0"
+    }
+}
