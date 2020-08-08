@@ -9,7 +9,7 @@ let players = new Map();
 
 server.on('connection', function (socket) {
     socket.id = client_id_count;
-    let player = { x: Math.random() * 700, y: Math.random() * 400, vx: 0, vy: 0, id: socket.id };
+    let player = { x: Math.random() * 700 + 50, y: Math.random() * 400 + 50, vx: 0, vy: 0, id: socket.id };
     initPlayer(player);
     players.set(socket.id, player);
 
@@ -61,7 +61,7 @@ let engine = Matter.Engine.create();
 engine.world.gravity.y = 0;
 
 function initPlayer(player) {
-    player.body = Matter.Bodies.rectangle(player.x, player.y, 80, 80)
+    player.body = Matter.Bodies.circle(player.x, player.y, 15)
     Matter.World.add(engine.world, player.body);
 }
 
