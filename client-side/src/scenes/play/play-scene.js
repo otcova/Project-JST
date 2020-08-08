@@ -37,7 +37,6 @@ client.scene_play_get_data = function (data) {
     if (data.type == "players") {
         players = data.data;
     } else if (data.type == "me") {
-        console.log("myID");
         myID = data.data;
     }
 }
