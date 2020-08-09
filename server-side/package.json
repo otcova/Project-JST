@@ -1,5 +1,5 @@
 {
-    "name": "project-JST-server",
+    "name": "project-jst-server",
     "version": "0.0.1",
     "dependencies": {
         "matter-js": "^0.14.2",
