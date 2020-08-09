@@ -1,8 +1,11 @@
+
+const port = 1224;
+
+// Socket ----------------------------------------------------------
 const Matter = require('matter-js');
 const WebSocket = require('ws');
 
-// Server ----------------------------------------------------------
-const server = new WebSocket.Server({ port: 1224 });
+const server = new WebSocket.Server({ port: port });
 
 let client_id_count = 0;
 let players = new Map();
@@ -13,11 +16,14 @@ server.on('connection', function (socket) {
     initPlayer(player);
     players.set(socket.id, player);
 
+    console.log("players: ", players.size);
+
     socket.on('message', function (message) {
         getClientData(socket.id, JSON.parse(message));
     });
     socket.on('close', function () {
         players.delete(socket.id);
+        console.log("players: ", players.size);
     });
 
     socket.send(JSON.stringify({ type: "me", data: socket.id }));
