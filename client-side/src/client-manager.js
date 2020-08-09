@@ -1,7 +1,7 @@
 let client = {};
 
 client.init = function (server_url) {
-    client.socket = new WebSocket(server_url);
+    client.socket = new WebSocket(server_url, ['json', 'xml']);
     client.server = "finding";
 
     client.socket.addEventListener('open', function (event) {
