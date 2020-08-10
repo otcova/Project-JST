@@ -5,7 +5,7 @@ let game = require("./game");
 let client_id_count = 0;
 
 const WebSocket = require('ws');
-const server = new WebSocket.Server({ port: port });
+const server = new WebSocket.Server({ port: port, host: '0.0.0.0' });
 
 server.on('connection', function (socket) {
     socket.id = client_id_count;
