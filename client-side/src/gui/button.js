@@ -9,7 +9,7 @@ class Button {
         if (w == undefined) w = textWidth(txt) + 60;
         if (h == undefined) h = textAscent() + 40;
 
-        if (point_rect_collision(mouseX, mouseY, x, y, w, h)) {
+        if (point_rect_collision(mouseX, mouseY, x - w/2, y - h/2, w, h)) {
             if (mouseIsPressed) {
                 this.state = "press";
             } else if (this.state == "press") {
@@ -31,7 +31,7 @@ class Button {
             fill(0);
             stroke(255);
         }
-        rect(x + 0.5, y + 0.5, parseInt(w), parseInt(h));
+        rect(x + 0.5 - w/2, y + 0.5 - h/2, parseInt(w), parseInt(h));
 
         fill(0);
         noStroke();
@@ -40,7 +40,7 @@ class Button {
         }
 
         textAlign(CENTER, CENTER);
-        text(txt, x, y, w, h);
+        text(txt, x - w/2, y - h/2, w, h);
     }
 }
 
