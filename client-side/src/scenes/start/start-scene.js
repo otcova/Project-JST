@@ -11,7 +11,7 @@ scene_manager.scene_start.draw = function () {
         this.button.draw("conectar", 100, 100);
 
         if (this.button.state == "click") {
-            client.init("ws://192.168.0.214:1224");
+            client.init();
         }
     } else if (client.server == "finding") {
         this.button.draw("connectant...", 100, 100);

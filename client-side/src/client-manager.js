@@ -1,6 +1,7 @@
+let server_url = "ws://192.168.0.214:1224";
 let client = {};
 
-client.init = function (server_url) {
+client.init = function () {
     client.socket = new WebSocket(server_url, ['json', 'xml']);
     client.server = "finding";
 
