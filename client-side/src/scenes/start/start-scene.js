@@ -11,7 +11,7 @@ scene_manager.scene_start.setup = function () {
             x: random(0, width),
             y: random(-700, -10), 
             vel: random(5, 10), 
-            size: random (30, 70),
+            size: random (30, 72),
             r: random(100, 255),
             g: random(100, 255),
             b: random(100, 255) };
