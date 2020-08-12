@@ -13,7 +13,8 @@ function start_fons(sceene) {
         if (i % 8 == 0) {
             push();
             translate(sceene.rodones[i].x, sceene.rodones[i].y);
-            rotate(i + performance.now() * 0.0001 * (noise(i / 8) * 20 - 10));
+            if (!sceene.paused) sceene.rodones[i].a += deltaTime * 0.00012 * (noise(i / 20) * 20 - 10)
+            rotate(sceene.rodones[i].a);
             let halfSize = sceene.rodones[i].size / 2;
             rect(-halfSize, -halfSize, sceene.rodones[i].size, sceene.rodones[i].size + (noise(i * 2) * 20 - 10));
             pop();

@@ -3,7 +3,7 @@ scene_manager.scene_start = { rodones: [] };
 
 scene_manager.scene_start.setup = function () {
     this.button = new Button();
-    this.button_pause = new Button();
+    this.button_pause = new Button("right", "bottom");
     this.paused = false;
     if (this.rodones.length == 0) {
         for (let i = 0; i < 200; i++) {
@@ -11,6 +11,7 @@ scene_manager.scene_start.setup = function () {
                 x: random(0, width),
                 y: random(-1400, -300),
                 //vel: random(5, 10), 
+                a: i,
                 size: 40 + i / 9,
                 r: random(100, 255),
                 g: random(100, 255),
@@ -32,7 +33,8 @@ scene_manager.scene_start.draw = function () {
 
     start_fons(this);
 
-    this.button_pause.draw("pausa", width - 100, height - 50);
+    if (this.paused) this.button_pause.draw("continuar", width - 40, height - 40);
+    else this.button_pause.draw("pausar", width - 40, height - 40);
     if (this.button_pause.state == "click") {
         this.paused = !this.paused;
     }
