@@ -10,11 +10,20 @@ function start_fons(sceene) {
         }
         fill(sceene.rodones[i].r, sceene.rodones[i].g, sceene.rodones[i].b);
 
-        ellipse(sceene.rodones[i].x, sceene.rodones[i].y, sceene.rodones[i].size);
+        if (i % 8 == 0) {
+            push();
+            translate(sceene.rodones[i].x, sceene.rodones[i].y);
+            rotate(i + performance.now() * 0.0001 * (noise(i / 8) * 20 - 10));
+            let halfSize = sceene.rodones[i].size / 2;
+            rect(-halfSize, -halfSize, sceene.rodones[i].size, sceene.rodones[i].size + (noise(i * 2) * 20 - 10));
+            pop();
+        }
+        else ellipse(sceene.rodones[i].x, sceene.rodones[i].y, sceene.rodones[i].size);
 
-        if (!sceene.paused && !(sceene.rodones[i].y < -60 && client.server == "finding"))
-            sceene.rodones[i].y += (sceene.rodones[i].size / 200) * Math.min(100, deltaTime) + (i % 10 == 0? 4 : 1);
-
+        if (!sceene.paused && !(sceene.rodones[i].y < -60 && client.server == "finding")) {
+            sceene.rodones[i].y += (sceene.rodones[i].size / 200) * Math.min(100, deltaTime) + (i % 10 == 0 ? noise(i) * 4 + 2 : 1);
+            sceene.rodones[i].x += (i % 10 == 0 ? noise(i) * 2 - 1 : 0);
+        }
         if (sceene.rodones[i].y > height + sceene.rodones[i].size / 2 && client.server != "finding") {
             sceene.rodones[i].y = -random(sceene.rodones[i].size / 2, height * 0.8);
             sceene.rodones[i].x = random(0, width);

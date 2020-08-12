@@ -6,20 +6,29 @@ scene_manager.scene_start.setup = function () {
     this.button_pause = new Button();
     this.paused = false;
     if (this.rodones.length == 0) {
-        for (let i = 0; i < 260; i++) {
+        for (let i = 0; i < 200; i++) {
             this.rodones.push({
                 x: random(0, width),
-                y: random(-1000, -300), 
+                y: random(-1400, -300),
                 //vel: random(5, 10), 
                 size: 40 + i / 9,
                 r: random(100, 255),
                 g: random(100, 255),
-                b: random(100, 255) });
+                b: random(100, 255)
+            });
         }
     }
 }
 scene_manager.scene_start.draw = function () {
     background(110, 200, 255);
+    randomSeed(1);
+    noStroke();
+    let t = performance.now() / 2000;
+    for (let i = 0; i < width * height / 70000; i++) {
+        fill(100, 150, 250, random(70, 110) * sin(t + i));
+        ellipse(random(0, width), random(0, height), random(300, 500));
+    }
+    randomSeed(performance.now());
 
     start_fons(this);
 
