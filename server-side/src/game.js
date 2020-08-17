@@ -40,7 +40,7 @@ function move_players() {
 }
 
 function init_player(player_id) {
-    let player = { x: Math.random() * 700 + 50, y: Math.random() * 400 + 50, vx: 0, vy: 0, id: player_id };
+    let player = { x: Math.random()*30 - 15, y: Math.random()*30 - 15, vx: 0, vy: 0, id: player_id };
     player.body = Matter.Bodies.circle(player.x, player.y, 15)
     Matter.World.add(engine.world, player.body);
     players.set(player_id, player);

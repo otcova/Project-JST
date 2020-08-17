@@ -19,6 +19,7 @@ scene_manager.scene_start.setup = function () {
             });
         }
     }
+    client.init();
 }
 scene_manager.scene_start.draw = function () {
     background(110, 200, 255);
