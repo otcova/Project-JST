@@ -21,7 +21,7 @@ client.init = function () {
 }
 
 client.get_server_data = function (data) {
-    client.scene_play_get_data(JSON.parse(data));
+    client.scene_scene_get_data(JSON.parse(data));
 }
 
 function sendServer(obj) {

@@ -3,7 +3,7 @@ let players_list = undefined;
 const Matter = require('matter-js');
 let engine = Matter.Engine.create();
 engine.world.gravity.y = 0;
-timer = {time: 0, delta: 10 };
+timer = { time: 0, delta: 10 };
 
 function start(_players_list) {
     players_list = _players_list;
@@ -13,11 +13,11 @@ function start(_players_list) {
         player.vx = 0;
         player.vy = 0;
         player.body = Matter.Bodies.circle(
-            Math.random() * 30 - 15, 
+            Math.random() * 30 - 15,
             Math.random() * 30 - 15, 5);
         Matter.World.add(engine.world, player.body);
     }
-    
+
     load_scene();
 }
 
@@ -29,9 +29,9 @@ function update() {
         timer.delta = now - timer.time;
         timer.time = now;
     }
+    //console.log("delta: ", time.delta);
 
-    Matter.Body.rotate(paret_body, 0.03);
-
+    move_scene();
     move_players();
     send_players_data();
 }
@@ -87,12 +87,41 @@ function get_player_message(player, message) {
 }
 
 // -----------
-let paret_body;
+
+const HALF_PI = 1.570796327;
+
+const pals_start = [
+    { x: 40, y: 40, angle: -HALF_PI, vel: 0.03 },
+    { x: -40, y: 40, angle: 0, vel: 0.03 },
+    { x: -40, y: -40, angle: -HALF_PI, vel: -0.03 },
+    { x: 40, y: -40, angle: 0, vel: -0.03 }
+];
+
+let pals_body = [];
 
 function load_scene() {
-    paret_body = Matter.Bodies.rectangle(40, 40, 80, 5, { isStatic: true });
-    Matter.World.add(engine.world, paret_body);
-    console.log(paret_body);
+    for (let i = 0; i < pals_start.length; i++) {
+        body = Matter.Bodies.rectangle(pals_start[i].x, pals_start[i].y, 85, 3, { isStatic: true });
+        Matter.Body.rotate(body, pals_start[i].angle);
+        Matter.World.add(engine.world, body);
+        pals_body.push(body);
+    }
+}
+
+function move_scene() {
+    let angles = [];
+    
+    for (let i = 0; i < pals_start.length; i++) {
+        angles.push(pals_body[i].angle);
+        Matter.Body.rotate(pals_body[i], pals_start[i].vel);
+    }
+    
+    let sceene = JSON.stringify({ type: "sceene", data: angles });
+
+    for (const player of players_list) {
+        player.socket.send(sceene);
+    }
+
 }
 
 // ---------
@@ -102,6 +131,6 @@ module.exports = {
     exit_player: exit_player,
     start: start,
     update: update,
-    on_close: function() {},
+    on_close: function () { },
     get_player_message: get_player_message
 };

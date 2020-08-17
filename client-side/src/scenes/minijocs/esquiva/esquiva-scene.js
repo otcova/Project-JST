@@ -36,7 +36,7 @@ scene_manager.scene_esquiva.draw = function () {
     draw_player();
     
     for (let i = 0; i < this.lineas.length; i++) {
-        this.lineas[i].angle += this.lineas[i].vel;
+        //this.lineas[i].angle += this.lineas[i].vel;
         push();
         translate(this.lineas[i].x, this.lineas[i].y);
         
@@ -63,4 +63,17 @@ scene_manager.scene_esquiva.draw = function () {
     }
     
     pop();
+}
+
+
+client.scene_scene_get_data = function (data) {
+    if (data.type == "players") {
+        players = data.data;
+    } else if (data.type == "me") {
+        myID = data.data;
+        scene_manager.change("esquiva");
+    } else if (data.type == "sceene") {
+        for (let i = 0; i < data.data.length; i++)
+            scene_manager.scene_esquiva.lineas[i].angle = data.data[i];
+    }
 }
