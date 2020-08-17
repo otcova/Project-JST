@@ -17,6 +17,8 @@ function start(_players_list) {
             Math.random() * 30 - 15, 5);
         Matter.World.add(engine.world, player.body);
     }
+    
+    load_scene();
 }
 
 function update() {
@@ -28,8 +30,10 @@ function update() {
         timer.time = now;
     }
 
-    send_players_data();
+    Matter.Body.rotate(paret_body, 0.03);
+
     move_players();
+    send_players_data();
 }
 
 function send_players_data() {
@@ -83,6 +87,15 @@ function get_player_message(player, message) {
 }
 
 // -----------
+let paret_body;
+
+function load_scene() {
+    paret_body = Matter.Bodies.rectangle(40, 40, 80, 5, { isStatic: true });
+    Matter.World.add(engine.world, paret_body);
+    console.log(paret_body);
+}
+
+// ---------
 
 module.exports = {
     init_new_player: init_new_player,
