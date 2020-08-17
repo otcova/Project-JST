@@ -8,7 +8,10 @@ engine.world.gravity.y = 0;
 
 function update(server) {
     move_players();
+    send_players_data(server);
+}
 
+function send_players_data(server) {
     let playersArray = [];
     for (const [id, player] of players) {
         let playerData = { x: player.x, y: player.y, id: id };
