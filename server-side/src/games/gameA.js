@@ -15,10 +15,12 @@ function start(_players_list) {
     players_list = _players_list;
     utils.default_init_players(players_list, Matter, engine);
     init_scene();
+    utils.log_players(players_list);
 }
 
 function init_new_player(player) {
     player.spectator = true;
+    utils.log_players(players_list);
 }
 
 function update() {
@@ -45,6 +47,8 @@ function exit_player(player) {
             module.exports.on_close();
         }
     }
+
+    utils.log_players(players_list);
 }
 
 function get_player_message(player, message) {

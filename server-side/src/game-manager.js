@@ -35,12 +35,10 @@ function init_player(socket) {
             }
         }
         game.exit_player(player);
-        console.log("clients: ", players_list.length);
     });
     
     
     player.send({ type: "me", data: player.id });
-    console.log("clients: ", players_list.length);
     
     game.init_new_player(player);
 }

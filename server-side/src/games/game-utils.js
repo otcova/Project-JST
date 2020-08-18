@@ -48,10 +48,21 @@ function move_players_body(players_list, Matter, engine, timer) {
     Matter.Engine.update(engine, timer.delta);
 }
 
+function log_players(players_list) {
+    let players_count = 0;
+    let spectators_count = 0;
+    for (const p of players_list) {
+        if (p.spectator) spectators_count++;
+        else players_count++;
+    }
+    console.log("players: ", players_count, "|", spectators_count);
+}
+
 module.exports = {
     default_init_players: default_init_players,
     update_timer: update_timer,
     get_players_pos: get_players_pos,
     send_to_players: send_to_players,
     move_players_body: move_players_body,
+    log_players: log_players
 };
