@@ -44,6 +44,8 @@ function exit_player(player) {
             if (!p.spectator) playerCount++;
         }
         if (playerCount == 0) {
+            Matter.World.clear(engine.world);
+            Matter.Engine.clear(engine);
             module.exports.on_close();
         }
     }
