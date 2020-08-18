@@ -67,13 +67,14 @@ scene_manager.scene_esquiva.draw = function () {
 
 
 client.scene_scene_get_data = function (data) {
-    if (data.type == "players") {
-        players = data.data;
-    } else if (data.type == "me") {
+    if (data.type == "frame") {
+
+        players = data.players;
+        for (let i = 0; i < data.scene.bars.length; i++)
+            scene_manager.scene_esquiva.lineas[i].angle = data.scene.bars[i];
+    } 
+    else if (data.type == "me") {
         myID = data.data;
         scene_manager.change("esquiva");
-    } else if (data.type == "sceene") {
-        for (let i = 0; i < data.data.length; i++)
-            scene_manager.scene_esquiva.lineas[i].angle = data.data[i];
     }
 }

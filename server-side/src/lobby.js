@@ -1,17 +1,21 @@
 let players_list = undefined;
+let last_player_init_data;
 
 function start(_players_list) {
-    console.log("lobby");
     players_list = _players_list;
+    last_player_init_data = Date.now();
 }
 
 function update() {
+    if (players_list.length >= 1) {
+        if (Date.now() - last_player_init_data > 500) {
+            module.exports.on_close();
+        }
+    }
 }
 
 function init_new_player(player) {
-    if (players_list.length >= 1) {
-        module.exports.on_close();
-    }
+    last_player_init_data = Date.now();
 }
 
 function exit_player(player) {

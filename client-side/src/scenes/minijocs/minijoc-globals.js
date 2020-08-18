@@ -17,7 +17,7 @@ function draw_player() {
 function moure() {
     let vx = 0;
     let vy = 0;
-    let speed = 1;
+    let speed = 0.8;
 
     if (keys["w"]) vy += -speed;
     if (keys["s"]) vy += speed;

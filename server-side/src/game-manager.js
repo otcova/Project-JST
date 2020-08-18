@@ -35,12 +35,12 @@ function init_player(socket) {
             }
         }
         game.exit_player(player);
-        console.log("players: ", players_list.length);
+        console.log("clients: ", players_list.length);
     });
     
     
     player.send({ type: "me", data: player.id });
-    console.log("players: ", players_list.length);
+    console.log("clients: ", players_list.length);
     
     game.init_new_player(player);
 }
@@ -53,8 +53,8 @@ function update() {
 
 game.on_close = game_on_close;
 function game_on_close() {
-    console.log("on-close - ", players_list.length);
     if (players_list.length == 0) game = lobby;
+    else if (game != lobby) game = lobby;
     else game = games[Math.floor(Math.random() * games.length)];
 
     game.start(players_list);
