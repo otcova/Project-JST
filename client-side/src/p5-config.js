@@ -4,6 +4,10 @@ function setup() {
     scene_manager.change("start");
 }
 
+function draw() {
+    get_active_scene().draw();
+}
+
 document.oncontextmenu = function () {
     return false;
 };

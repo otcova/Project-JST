@@ -6,24 +6,31 @@ client.init = function () {
     client.server = "finding";
 
     client.socket.addEventListener('open', function (event) {
-        client.server = "ok";
+        client.server = "online";
     });
     client.socket.addEventListener('message', function (event) {
-        client.get_server_data(event.data);
+        client.manage_server_data(event.data);
     });
     client.socket.addEventListener('error', function (event) {
         client.server = "error";
     });
     client.socket.addEventListener('close', function () {
         client.server = undefined;
-        onServerClose();
+        scene_manager.change("start");
     });
 }
 
-client.get_server_data = function (data) {
-    client.scene_scene_get_data(JSON.parse(data));
+client.manage_server_data = function (data_str) {
+    let data = JSON.parse(data_str);
+    if (data.type == "frame") {
+        if (get_active_scene().get_frame != undefined)
+            get_active_scene().get_frame(data);
+    } 
+    else if (data.type == "id") {
+        myID = data.data;
+    }
 }
 
-function sendServer(obj) {
+function send_to_server(obj) {
     client.socket.send(JSON.stringify(obj));
 }

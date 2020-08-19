@@ -12,14 +12,10 @@ const server = new WebSocket.Server({ port: 1224, host: '0.0.0.0' });
 server.on('connection', init_player);
 
 function init_player(socket) {
-    let player = { 
-        x: Math.random() * 700 + 50, 
-        y: Math.random() * 400 + 50, 
-        vx: 0, 
-        vy: 0, 
+    let player = {
         id: player_id_counter,
         socket: socket,
-        send: function(data) { this.socket.send(JSON.stringify(data)); }
+        send: function (data) { socket.send(JSON.stringify(data)); }
     };
     players_list.push(player);
     player_id_counter++;
@@ -28,28 +24,30 @@ function init_player(socket) {
         game.get_player_message(player, JSON.parse(message));
     });
     socket.on('close', function () {
-        for (var i = 0; i < players_list.length; i++) { 
-            if (players_list[i].id == player.id) { 
-                players_list.splice(i, 1);
-                break;
-            }
-        }
+        remove_playerfrom_list(player);
         game.exit_player(player);
     });
-    
-    
-    player.send({ type: "me", data: player.id });
-    
+
+    player.send({ type: "id", data: player.id });
     game.init_new_player(player);
 }
 
+function remove_playerfrom_list(player) {
+    for (var i = 0; i < players_list.length; i++) {
+        if (players_list[i].id == player.id) {
+            players_list.splice(i, 1);
+            break;
+        }
+    }
+}
+
 game.start(players_list);
+game.on_close = game_on_close;
 setInterval(update, 16);
 function update() {
     game.update();
 }
 
-game.on_close = game_on_close;
 function game_on_close() {
     if (players_list.length == 0) game = lobby;
     else if (game != lobby) game = lobby;

@@ -1,6 +1,6 @@
-scene_manager.scene_esquiva = {}
+let esquiva_scene = create_scene("esquiva");
 
-scene_manager.scene_esquiva.setup = function () {
+esquiva_scene.setup = function () {
     this.plat_radi = 80;
     this.lineas = [
         { x: 40, y: 40, radi: 40, angle: -HALF_PI, vel: 0.03 },
@@ -11,16 +11,9 @@ scene_manager.scene_esquiva.setup = function () {
     ];
 }
 
-scene_manager.scene_esquiva.draw = function () {
+esquiva_scene.draw = function () {
     background(148, 64, 41);
     moure();
-
-
-    //********* SERVIDOR   ********/
-    //this.plat_radi -= 0.01;
-
-
-    //****************************/
 
     push();
     translate(width / 2, height / 2);
@@ -65,16 +58,12 @@ scene_manager.scene_esquiva.draw = function () {
     pop();
 }
 
+esquiva_scene.get_frame = function (frame_data) {
+    players = frame_data.players;
+    this.load_bars(frame_data.scene.bars);
+}
 
-client.scene_scene_get_data = function (data) {
-    if (data.type == "frame") {
-
-        players = data.players;
-        for (let i = 0; i < data.scene.bars.length; i++)
-            scene_manager.scene_esquiva.lineas[i].angle = data.scene.bars[i];
-    } 
-    else if (data.type == "me") {
-        myID = data.data;
-        scene_manager.change("esquiva");
-    }
+esquiva_scene.load_bars = function(bars) {
+    for (let i = 0; i < bars.length; i++)
+        this.lineas[i].angle = bars[i];
 }

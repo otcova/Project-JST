@@ -1,30 +1,36 @@
 
-let scene_manager = { scene_name: "" };
+let scene_manager = { scene_name: "", scenes: {} };
 let keys = {};
 
 scene_manager.change = function (new_scene_name) {
     if (scene_manager.scene_name != new_scene_name) {
-        if (scene_manager["scene_" + new_scene_name].setup != undefined) {
-            scene_manager["scene_" + new_scene_name].setup();
-        }
         scene_manager.scene_name = new_scene_name;
+        get_active_scene().setup();
     }
-}
-
-function draw() {
-    scene_manager["scene_" + scene_manager.scene_name].draw();
 }
 
 function keyPressed() {
     keys[key] = true;
-    if (scene_manager["scene_" + scene_manager.scene_name].keyPressed != undefined) {
-        scene_manager["scene_" + scene_manager.scene_name].keyPressed();
+    if (get_active_scene().keyPressed != undefined) {
+        get_active_scene().keyPressed();
     }
 }
 
 function keyReleased() {
     keys[key] = false;
-    if (scene_manager["scene_" + scene_manager.scene_name].keyReleased != undefined) {
-        scene_manager["scene_" + scene_manager.scene_name].keyReleased();
+    if (get_active_scene().keyReleased != undefined) {
+        get_active_scene().keyReleased();
     }
+}
+
+function get_active_scene() {
+    return scene_manager.scenes[scene_manager.scene_name];
+}
+
+function create_scene(name) {
+    scene_manager.scenes[name] = {
+        setup: function () {},
+        draw: function () {}
+    }
+    return scene_manager.scenes[name];
 }

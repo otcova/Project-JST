@@ -1,20 +1,12 @@
 let myID = undefined;
 let players = [];
 
-scene_manager.scene_play = {}
+play_scene = create_scene("play");
 
-scene_manager.scene_play.setup = function () {
+play_scene.setup = function () {
     players = [];
+    scene_manager.change("esquiva");
 }
 
-scene_manager.scene_play.draw = function () {
-}
-
-client.scene_play_get_data = function (data) {
-    if (data.type == "players") {
-        players = data.data;
-    } else if (data.type == "me") {
-        myID = data.data;
-        scene_manager.change("esquiva");
-    }
+play_scene.draw = function () {
 }

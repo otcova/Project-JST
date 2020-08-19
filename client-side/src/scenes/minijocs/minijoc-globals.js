@@ -28,6 +28,6 @@ function moure() {
     if (vy != player.vy || vx != player.vx) {
         player.vx = vx;
         player.vy = vy;
-        sendServer({ type: "set vel", vx: vx, vy: vy });
+        send_to_server({ type: "set vel", vx: vx, vy: vy });
     }
 }
