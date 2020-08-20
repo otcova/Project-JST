@@ -23,6 +23,13 @@ function keyReleased() {
     }
 }
 
+function keyTyped() {
+    if (get_active_scene().key_typed != undefined) {
+        get_active_scene().key_typed();
+    }
+    return false;
+}
+
 function get_active_scene() {
     return scene_manager.scenes[scene_manager.scene_name];
 }

@@ -55,7 +55,7 @@ esquiva_scene.draw_pals = function () {
         fill(0);
         noStroke();
         ellipse(0, 0, 3);
-
+        
         pop();
     }
 }

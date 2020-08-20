@@ -9,14 +9,33 @@ class Button {
     }
 
     draw(txt, x, y, w, h) {
+        [w, h] = this.get_default_size(txt, w, h);
+        [x, y] = this.apply_align(x, y, w, h);
+
+        this.calc_mouse_events(x, y, w, h);
+        
+        this.rect_style();
+        rect(x + 0.5, y + 0.5, w, h);
+
+        this.text_style();
+        text(txt, x, y, w, h);
+    }
+
+    get_default_size(txt, w, h) {
         if (w == undefined) w = textWidth(txt) + 60;
         if (h == undefined) h = textAscent() + 40;
+        return [Math.round(w), Math.round(h)];
+    }
 
+    apply_align(x, y, w, h) {
         if (this.align.x == "center") x -= w / 2;
         else if (this.align.x == "right") x -= w;
         if (this.align.y == "center") y -= h / 2;
         else if (this.align.y == "bottom") y -= h;
+        return [x, y];
+    }
 
+    calc_mouse_events(x, y, w, h) {
         if (point_rect_collision(mouseX, mouseY, x, y, w, h)) {
             if (mouseIsPressed) {
                 this.state = "press";
@@ -28,7 +47,9 @@ class Button {
         } else {
             this.state = "none";
         }
+    }
 
+    rect_style() {
         stroke(0);
         fill(255);
         strokeWeight(1);
@@ -39,8 +60,9 @@ class Button {
             fill(0);
             stroke(255);
         }
-        rect(x + 0.5, y + 0.5, Math.round(w), Math.round(h));
+    }
 
+    text_style() {
         fill(0);
         noStroke();
         if (this.state != "none") {
@@ -48,7 +70,6 @@ class Button {
         }
 
         textAlign(CENTER, CENTER);
-        text(txt, x, y, w, h);
     }
 }
 

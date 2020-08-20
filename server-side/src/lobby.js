@@ -10,7 +10,7 @@ function start(_players_list) {
 
 function update() {
     if (players_list.length >= 1) {
-        if (Date.now() - last_player_init_data > 700) {
+        if (Date.now() - last_player_init_data > 2000) {
             module.exports.on_close(0);
         }
     }

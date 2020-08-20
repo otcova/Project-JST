@@ -11,9 +11,11 @@ function draw_players() {
                 fill(255, 100, 100);
             }
             ellipse(player.x, player.y, 5);
+            
         }
     }
-}    
+}
+
 function send_player_vel() {
     let vx = 0;
     let vy = 0;
