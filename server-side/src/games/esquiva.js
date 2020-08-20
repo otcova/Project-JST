@@ -16,6 +16,7 @@ function start(_players_list) {
 }
 
 function new_player(player) {
+    player.send({ type: "nova partida", game_name: "esquiva" });
     player.spectator = true;
     utils.log_players(players_list);
 }

@@ -29,6 +29,10 @@ client.manage_server_data = function (data_str) {
     else if (data.type == "id") {
         myID = data.data;
     }
+    else if (data.type == "nova partida") {
+        scene_manager.change("nova_partida");
+        get_active_scene().get_nova_partida(data);
+    }
 }
 
 function send_to_server(obj) {

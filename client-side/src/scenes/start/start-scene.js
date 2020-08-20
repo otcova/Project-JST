@@ -31,6 +31,6 @@ start_scene.draw = function () {
     } else if (client.server == "finding") {
         this.button.draw("connectant...", width / 2, height / 2);
     } else if (client.server == "online") {
-        scene_manager.change("play");
+        scene_manager.change("nova_partida");
     }
 }

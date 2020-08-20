@@ -4,6 +4,8 @@ let last_player_init_data;
 function start(_players_list) {
     players_list = _players_list;
     last_player_init_data = Date.now();
+    for (const player of players_list)
+        player.send({ type: "nova partida", game_name: "esquiva" });
 }
 
 function update() {
@@ -15,6 +17,7 @@ function update() {
 }
 
 function new_player(player) {
+    player.send({ type: "nova partida", game_name: "esquiva" });
     last_player_init_data = Date.now();
 }
 
