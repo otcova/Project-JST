@@ -1,4 +1,4 @@
-function default_init_players(players_list, Matter, engine) {
+function init_players(players_list, Matter, engine) {
     for (const player of players_list) {
         player.spectator = false;
         player.vx = 0;
@@ -10,6 +10,16 @@ function default_init_players(players_list, Matter, engine) {
             Matter.World.add(engine.world, player.body);
         }
     }
+    log_players(players_list);
+}
+
+function init_engine(Matter, engine) {
+    Matter.World.clear(engine.world);
+    Matter.Engine.clear(engine);
+}
+
+function create_timer() {
+    return { start: Date.now(), time: 0, delta: 10 };
 }
 
 function update_timer(timer) {
@@ -22,7 +32,7 @@ function update_timer(timer) {
     }
 }
 
-function get_players_pos(players_list) {
+function get_players_frame(players_list) {
     let players_array = [];
     for (const player of players_list) {
         if (!player.spectator) {
@@ -40,29 +50,41 @@ function send_to_players(players_list, data) {
     }
 }
 
-function move_players_body(players_list, Matter, engine, timer) {
+function move_players(players_list, Matter) {
     for (const player of players_list) {
         if (!player.spectator)
             Matter.Body.setVelocity(player.body, { x: player.vx, y: player.vy });
     }
+}
+
+function update_engine(Matter, engine, timer) {
     Matter.Engine.update(engine, timer.delta);
 }
 
-function log_players(players_list) {
+function count_players(players_list) {
     let players_count = 0;
     let spectators_count = 0;
     for (const p of players_list) {
         if (p.spectator) spectators_count++;
         else players_count++;
     }
-    console.log("players: ", players_count, "|", spectators_count);
+    return { players: players_count, spectators: spectators_count };
+}
+
+function log_players(players_list) {
+    let count = count_players(players_list);
+    console.log("players: ", count.players, "|", count.spectators);
 }
 
 module.exports = {
-    default_init_players: default_init_players,
+    init_engine: init_engine,
+    init_players: init_players,
+    create_timer: create_timer,
     update_timer: update_timer,
-    get_players_pos: get_players_pos,
+    get_players_frame: get_players_frame,
     send_to_players: send_to_players,
-    move_players_body: move_players_body,
-    log_players: log_players
+    move_players: move_players,
+    update_engine: update_engine,
+    log_players: log_players,
+    count_players: count_players
 };

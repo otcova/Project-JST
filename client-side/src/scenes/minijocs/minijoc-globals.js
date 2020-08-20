@@ -1,6 +1,6 @@
 let player = { vx: 0, vy: 0 };
 
-function draw_player() {
+function draw_players() {
     strokeWeight(2 / (height / 100));
     if (myID != undefined) {
         stroke(0);
@@ -14,7 +14,7 @@ function draw_player() {
         }
     }
 }    
-function moure() {
+function send_player_vel() {
     let vx = 0;
     let vy = 0;
     let speed = 0.8;

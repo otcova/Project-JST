@@ -4,7 +4,7 @@ let player_id_counter = 0;
 let lobby = require("./lobby");
 let game = lobby;
 let games = [
-    require("./games/gameA")
+    require("./games/esquiva")
 ];
 
 const WebSocket = require('ws');
@@ -29,7 +29,7 @@ function init_player(socket) {
     });
 
     player.send({ type: "id", data: player.id });
-    game.init_new_player(player);
+    game.new_player(player);
 }
 
 function remove_playerfrom_list(player) {
@@ -48,11 +48,10 @@ function update() {
     game.update();
 }
 
-function game_on_close() {
-    if (players_list.length == 0) game = lobby;
-    else if (game != lobby) game = lobby;
-    else game = games[Math.floor(Math.random() * games.length)];
-
-    game.start(players_list);
+function game_on_close(next_game) {
+    if (next_game == undefined || players_list.length == 0) game = lobby;
+    else game = games[next_game];
+    
     game.on_close = game_on_close;
+    game.start(players_list);
 }

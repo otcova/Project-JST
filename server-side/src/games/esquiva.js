@@ -5,20 +5,17 @@ const HALF_PI = 1.570796327;
 let players_list = undefined;
 let engine = Matter.Engine.create();
 engine.world.gravity.y = 0;
-let timer = { start: Date.now(), time: 0, delta: 10 };
+let timer;
 
 function start(_players_list) {
-    timer.start = Date.now();
-    Matter.World.clear(engine.world);
-    Matter.Engine.clear(engine);
-    
     players_list = _players_list;
-    utils.default_init_players(players_list, Matter, engine);
+    timer = utils.create_timer();
+    utils.init_engine(Matter, engine);
+    utils.init_players(players_list, Matter, engine);
     init_scene();
-    utils.log_players(players_list);
 }
 
-function init_new_player(player) {
+function new_player(player) {
     player.spectator = true;
     utils.log_players(players_list);
 }
@@ -26,31 +23,35 @@ function init_new_player(player) {
 function update() {
     utils.update_timer(timer);
     
-    let scene_inst = move_scene();
-    utils.move_players_body(players_list, Matter, engine, timer);
-    let players_inst = utils.get_players_pos(players_list);
+    move_scene();
+    utils.move_players(players_list, Matter);
+    utils.update_engine(Matter, engine, timer);
 
-    utils.send_to_players(players_list, { 
-        type: "frame", 
-        players: players_inst, 
-        scene: scene_inst 
+    send_frame();
+}
+
+function send_frame() {
+    utils.send_to_players(players_list, {
+        type: "frame",
+        players: utils.get_players_frame(players_list),
+        scene: get_scene_frame()
     });
 }
 
 function exit_player(player) {
     if (!player.spectator) {
-        let playerCount = 0;
-        for (const p of players_list) {
-            if (!p.spectator) playerCount++;
-        }
-        if (playerCount == 0) {
-            Matter.World.clear(engine.world);
-            Matter.Engine.clear(engine);
-            module.exports.on_close();
+        let count = utils.count_players(players_list);
+        if (count.players == 0) {
+            close_game();
         }
     }
-
     utils.log_players(players_list);
+}
+
+function close_game() {
+    Matter.World.clear(engine.world);
+    Matter.Engine.clear(engine);
+    module.exports.on_close();
 }
 
 function get_player_message(player, message) {
@@ -59,9 +60,6 @@ function get_player_message(player, message) {
         if (message.vy != undefined) player.vy = message.vy;
     }
 }
-
-
-// ------------ scene stuf ----------------
 
 
 const pals_start = [
@@ -84,20 +82,24 @@ function init_scene() {
 }
 
 function move_scene() {
+    for (let i = 0; i < pals_start.length; i++) {
+        Matter.Body.rotate(pals_body[i], pals_start[i].vel * 0.0000005 * (20000 + Math.min(140000, timer.time)));
+    }
+}
+
+function get_scene_frame() {
     let angles = [];
     
     for (let i = 0; i < pals_start.length; i++) {
         angles.push(pals_body[i].angle);
-        Matter.Body.rotate(pals_body[i], pals_start[i].vel * 0.0000005 * (20000 + Math.min(140000, timer.time)));
     }
-
-    return { bars: angles };
+    return { pals: angles };
 }
 
 // ---------
 
 module.exports = {
-    init_new_player: init_new_player,
+    new_player: new_player,
     exit_player: exit_player,
     start: start,
     update: update,

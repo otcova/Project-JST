@@ -8,13 +8,13 @@ function start(_players_list) {
 
 function update() {
     if (players_list.length >= 1) {
-        if (Date.now() - last_player_init_data > 500) {
-            module.exports.on_close();
+        if (Date.now() - last_player_init_data > 1000) {
+            module.exports.on_close(0);
         }
     }
 }
 
-function init_new_player(player) {
+function new_player(player) {
     last_player_init_data = Date.now();
 }
 
@@ -25,7 +25,7 @@ function get_player_message(player, message) {
 }
 
 module.exports = {
-    init_new_player: init_new_player,
+    new_player: new_player,
     exit_player: exit_player,
     start: start,
     update: update,

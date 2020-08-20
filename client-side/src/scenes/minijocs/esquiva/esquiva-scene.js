@@ -3,33 +3,37 @@ let esquiva_scene = create_scene("esquiva");
 esquiva_scene.setup = function () {
     this.plat_radi = 80;
     this.lineas = [
-        { x: 40, y: 40, radi: 40, angle: -HALF_PI, vel: 0.03 },
-        { x: -40, y: 40, radi: 40, angle: 0, vel: 0.03},
-        { x: -40, y: -40, radi: 40, angle: -HALF_PI, vel: -0.03},
-        { x: 40, y: -40, radi: 40, angle: 0, vel: -0.03}
-        
+        { x: 40, y: 40, radi: 40, angle: -HALF_PI },
+        { x: -40, y: 40, radi: 40, angle: 0 },
+        { x: -40, y: -40, radi: 40, angle: -HALF_PI },
+        { x: 40, y: -40, radi: 40, angle: 0 }
     ];
 }
 
 esquiva_scene.draw = function () {
+    send_player_vel();
+    
+    this.draw_enviroment();
+    this.draw_plataforma();
+    draw_players();
+    this.draw_pals();
+}
+
+esquiva_scene.draw_enviroment = function() {
     background(148, 64, 41);
-    moure();
-
-    push();
     translate(width / 2, height / 2);
-    let s = height / 100;
-    scale(s, s);
+    scale(height / 100);
+}
 
-    strokeWeight(2 / s);
+esquiva_scene.draw_plataforma = function() {
     fill(50, 128, 63);
     stroke(0);
     strokeWeight(2);
     ellipse(0, 0, this.plat_radi);
-    
-    draw_player();
-    
+}
+
+esquiva_scene.draw_pals = function () {
     for (let i = 0; i < this.lineas.length; i++) {
-        //this.lineas[i].angle += this.lineas[i].vel;
         push();
         translate(this.lineas[i].x, this.lineas[i].y);
         
@@ -54,16 +58,14 @@ esquiva_scene.draw = function () {
 
         pop();
     }
-    
-    pop();
 }
 
 esquiva_scene.get_frame = function (frame_data) {
     players = frame_data.players;
-    this.load_bars(frame_data.scene.bars);
+    this.load_pals(frame_data.scene.pals);
 }
 
-esquiva_scene.load_bars = function(bars) {
-    for (let i = 0; i < bars.length; i++)
-        this.lineas[i].angle = bars[i];
+esquiva_scene.load_pals = function(pals) {
+    for (let i = 0; i < pals.length; i++)
+        this.lineas[i].angle = pals[i];
 }
