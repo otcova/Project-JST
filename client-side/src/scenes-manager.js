@@ -9,23 +9,23 @@ scene_manager.change = function (new_scene_name) {
     }
 }
 
-function keyPressed() {
+function keyPressed(event) {
     keys[key] = true;
-    if (get_active_scene().keyPressed != undefined) {
-        get_active_scene().keyPressed();
+    if (get_active_scene().key_pressed != undefined) {
+        get_active_scene().key_pressed(event);
     }
 }
 
-function keyReleased() {
+function keyReleased(event) {
     keys[key] = false;
-    if (get_active_scene().keyReleased != undefined) {
-        get_active_scene().keyReleased();
+    if (get_active_scene().key_released != undefined) {
+        get_active_scene().key_released(event);
     }
 }
 
-function keyTyped() {
+function keyTyped(event) {
     if (get_active_scene().key_typed != undefined) {
-        get_active_scene().key_typed();
+        get_active_scene().key_typed(event);
     }
     return false;
 }
