@@ -6,7 +6,7 @@ start_scene.setup = function () {
     this.button_conectar = new Button();
     this.button_pause = new Button("right", "bottom");
 
-    this.text_server = new InputText("62.175.116.122:1224");
+    this.text_server = new InputText("localhost:1224");
     this.paused = false;
     this.init_rodones();
 }
