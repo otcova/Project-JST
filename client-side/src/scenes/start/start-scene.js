@@ -6,15 +6,15 @@ scene_manager.scene_start.setup = function () {
 }
 
 scene_manager.scene_start.draw = function () {
-    background(110, 200, 255);
+    background(110, 100, 255);  //fondo azul  
     if (client.server == undefined || client.server == "error") {
-        this.button.draw("conectar", 100, 100);
+        this.button.draw("Conectar", 612, 300); //poscicion centre
 
         if (this.button.state == "click") {
             client.init();
         }
     } else if (client.server == "finding") {
-        this.button.draw("connectant...", 100, 100);
+        this.button.draw("Connectant...", 612, 300);
     } else if (client.server == "ok") {
         scene_manager.change("play");
     }

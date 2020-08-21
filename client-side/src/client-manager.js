@@ -1,4 +1,5 @@
-let server_url = "ws://192.168.0.214:1224";
+// let server_url = "ws://192.168.43.200:1224";
+let server_url ="ws://localhost:1224";
 let client = {};
 
 client.init = function () {

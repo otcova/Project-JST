@@ -20,18 +20,25 @@ class Button {
         } else {
             this.state = "none";
         }
-
-        stroke(0);
-        fill(255);
-        strokeWeight(1);
+        var a = 0; //ancho
+        stroke(0);  //color borde negro
+        fill(110, 200, 255);    //color button
+        strokeWeight(3);    //tamaño boder
+       
         if (this.state == "hover") {
-            fill(50);
-            stroke(255);
+            // fill(50);   //color gris
+            // stroke(255);    //color borde
+            fill(0, 0, 100)
+            strokeWeight(10);
+            a = 20; //hacer grande el button
+            
         } else if (this.state == "press") {
             fill(0);
-            stroke(255);
+            stroke(0);
         }
-        rect(x + 0.5, y + 0.5, parseInt(w), parseInt(h));
+        var r = 15; //border-radius
+
+        rect(x - a/2, y - a/2 , parseInt(w) + a, parseInt(h) + a, r); //botton tamaño background
 
         fill(0);
         noStroke();
@@ -40,7 +47,7 @@ class Button {
         }
 
         textAlign(CENTER, CENTER);
-        text(txt, x, y, w, h);
+        text(txt, x, y, w, h, );
     }
 }
 
