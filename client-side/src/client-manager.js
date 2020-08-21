@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 // let server_url = "ws://192.168.43.200:1224";
 let server_url ="ws://localhost:1224";
+=======
+let server_url = "ws://localhost:1224";
+>>>>>>> efdbce9a0825b27bb2db79f1f3169585d88bd0b8
 let client = {};
 
 client.init = function () {
@@ -7,20 +11,35 @@ client.init = function () {
     client.server = "finding";
 
     client.socket.addEventListener('open', function (event) {
-        client.server = "ok";
+        client.server = "online";
     });
     client.socket.addEventListener('message', function (event) {
-        client.get_server_data(event.data);
+        client.manage_server_data(event.data);
     });
     client.socket.addEventListener('error', function (event) {
         client.server = "error";
     });
     client.socket.addEventListener('close', function () {
         client.server = undefined;
-        onServerClose();
+        scene_manager.change("start");
     });
 }
 
-client.get_server_data = function (data) {
-    client.scene_play_get_data(JSON.parse(data));
+client.manage_server_data = function (data_str) {
+    let data = JSON.parse(data_str);
+    if (data.type == "frame") {
+        if (get_active_scene().get_frame != undefined)
+            get_active_scene().get_frame(data);
+    } 
+    else if (data.type == "id") {
+        myID = data.data;
+    }
+    else if (data.type == "nova partida") {
+        scene_manager.change("nova_partida");
+        get_active_scene().get_nova_partida(data);
+    }
+}
+
+function send_to_server(obj) {
+    client.socket.send(JSON.stringify(obj));
 }

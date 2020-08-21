@@ -1,1 +1,1 @@
-require("./src/server");
+require("./src/game-manager");
