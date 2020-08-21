@@ -41,3 +41,16 @@ function create_scene(name) {
     }
     return scene_manager.scenes[name];
 }
+
+function random_select(list) {
+    let dau = parseInt(random(0, list.length));
+    for (let i = 0; i < list.length; i++)
+        if (dau == i) return list[i];
+}
+
+function normalize_angle(angle) {
+    let newAngle = angle;
+    while (newAngle <= -180) newAngle += 360;
+    while (newAngle > 180) newAngle -= 360;
+    return newAngle;
+}

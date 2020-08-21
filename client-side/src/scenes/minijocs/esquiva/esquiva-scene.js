@@ -21,8 +21,7 @@ esquiva_scene.draw = function () {
 
 esquiva_scene.draw_enviroment = function() {
     background(148, 64, 41);
-    translate(width / 2, height / 2);
-    scale(height / 100);
+    default_transforms();
 }
 
 esquiva_scene.draw_plataforma = function() {

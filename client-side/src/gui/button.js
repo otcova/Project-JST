@@ -47,20 +47,6 @@ class Button {
         } else {
             this.state = "none";
         }
-<<<<<<< HEAD
-        var a = 0; //ancho
-        stroke(0);  //color borde negro
-        fill(110, 200, 255);    //color button
-        strokeWeight(3);    //tamaño boder
-       
-        if (this.state == "hover") {
-            // fill(50);   //color gris
-            // stroke(255);    //color borde
-            fill(0, 0, 100)
-            strokeWeight(10);
-            a = 20; //hacer grande el button
-            
-=======
     }
 
     rect_style() {
@@ -70,18 +56,11 @@ class Button {
         if (this.state == "over") {
             fill(50);
             stroke(255);
->>>>>>> efdbce9a0825b27bb2db79f1f3169585d88bd0b8
         } else if (this.state == "press") {
             fill(0);
-            stroke(0);
+            stroke(255);
         }
-<<<<<<< HEAD
-        var r = 15; //border-radius
-
-        rect(x - a/2, y - a/2 , parseInt(w) + a, parseInt(h) + a, r); //botton tamaño background
-=======
     }
->>>>>>> efdbce9a0825b27bb2db79f1f3169585d88bd0b8
 
     text_style() {
         fill(0);
@@ -91,10 +70,6 @@ class Button {
         }
 
         textAlign(CENTER, CENTER);
-<<<<<<< HEAD
-        text(txt, x, y, w, h, );
-=======
->>>>>>> efdbce9a0825b27bb2db79f1f3169585d88bd0b8
     }
 }
 

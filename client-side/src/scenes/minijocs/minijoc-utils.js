@@ -33,3 +33,16 @@ function send_player_vel() {
         send_to_server({ type: "set vel", vx: vx, vy: vy });
     }
 }
+
+function default_transforms() {
+    translate(width / 2, height / 2);
+    scale(height / 100);
+}
+
+function rodona(pos, d) {
+    ellipse(pos.x, pos.y, d);
+}
+
+function linea(posA, posB) {
+    line(posA.x, posA.y, posB.x, posB.y);
+}
