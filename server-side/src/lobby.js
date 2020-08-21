@@ -32,6 +32,6 @@ module.exports = {
     exit_player: exit_player,
     start: start,
     update: update,
-    on_close: function() {},
+    on_close: function(n) {},
     get_player_message: get_player_message
 };
