@@ -1,33 +1,44 @@
-function animate_all(env) {
-    if (env.numbers != undefined) {
-        if (env.numbers_params == undefined) env.numbers_params = {};
-        for (let num in numbers) {
-            if (env.numbers_params[num] != undefined)
-                animate(numbers[num], env.numbers_params[num]);
-        }
-    }
-} 
+function move_to_by_time(num, dest, time_span) {
+    if (num.dest != dest) {
+        num.start_time = time;
+        num.end_time = time + time_span;
+        num.start = num.v;
+        num.dest = dest;
+        num.smooth_fn = animation_smooth_fns.sin;
 
-function set_animte(env, num_name, dest, duration) {
-    if (env.numbers_params == undefined) env.numbers_params = {};
-    if (env.numbers_params[num_name] == undefined) env.numbers_params[num_name] = {};
-    
-    if (env.numbers_params[num_name].dest != dest) {
-        env.numbers_params[num_name].start_time = time;
-        env.numbers_params[num_name].end_time = time + duration;
-        env.numbers_params[num_name].start = num.value;
-        env.numbers_params[num_name].dest = dest;
+        current_animations.add(num);
     }
 }
 
-function animate(num, params) {
-    if (params.dest != undefined) {
-        if (params.end_time > time) {
-            let t = ((time - params.start_time) / (params.end_time - params.start_time));
-            t = sin(sin((t * 2 - 1) * HALF_PI) * HALF_PI) / 2 + 0.5;
-            num = params.start + (params.dest - params.start) * t;
+function move_to_by_speed(num, dest, vel) {
+    move_to_by_time(num, dest, (dest - num.v) / vel);
+}
+
+let current_animations = new Set();
+
+requestAnimationFrame(animation_loop);
+
+function animation_loop() {
+    requestAnimationFrame(animation_loop);
+    for (const num of current_animations) {
+        animate(num);
+    }
+}
+
+function animate(num) {
+    if (num.dest != undefined) {
+        if (num.end_time > time) {
+            let t = ((time - num.start_time) / (num.end_time - num.start_time));
+            t = num.smooth_fn(t);
+            num.v = num.start + (num.dest - num.start) * t;
         } else {
-            num = params.dest;
+            num.v = num.dest;
+            current_animations.delete(num);
         }
     }
 }
+
+let animation_smooth_fns = {
+    sin: t => { return sin((t * 2 - 1) * HALF_PI) / 2 + 0.5; },
+    linear: t => { return t; }
+};
