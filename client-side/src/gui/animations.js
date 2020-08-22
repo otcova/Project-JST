@@ -10,8 +10,8 @@ function move_to_by_time(num, dest, time_span, smooth_fn = "sin") {
     }
 }
 
-function move_to_by_speed(num, dest, vel) {
-    move_to_by_time(num, dest, (dest - num.v) / vel);
+function move_to_by_speed(num, dest, vel, smooth_fn) {
+    move_to_by_time(num, dest, (dest - num.v) / vel, smooth_fn);
 }
 
 let current_animations = new Set();
