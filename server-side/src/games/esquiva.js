@@ -50,7 +50,7 @@ function exit_player(player) {
 }
 
 function close_game() {
-    Matter.World.clear(engine.world);
+    Matter.World.clear(engine.world, false);
     Matter.Engine.clear(engine);
     module.exports.on_close();
 }
@@ -75,7 +75,7 @@ let pals_body;
 function init_scene() {
     pals_body = [];
     for (let i = 0; i < pals_start.length; i++) {
-        body = Matter.Bodies.rectangle(pals_start[i].x, pals_start[i].y, 87, 8, { isStatic: true });
+        let body = Matter.Bodies.rectangle(pals_start[i].x, pals_start[i].y, 87, 8, { isStatic: true });
         Matter.Body.rotate(body, pals_start[i].angle);
         Matter.World.add(engine.world, body);
         pals_body.push(body);
