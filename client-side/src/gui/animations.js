@@ -1,10 +1,10 @@
-function move_to_by_time(num, dest, time_span) {
+function move_to_by_time(num, dest, time_span, smooth_fn = "sin") {
     if (num.dest != dest) {
         num.start_time = time;
         num.end_time = time + time_span;
         num.start = num.v;
         num.dest = dest;
-        num.smooth_fn = animation_smooth_fns.sin;
+        num.smooth_fn = animation_smooth_fns[smooth_fn];
 
         current_animations.add(num);
     }
@@ -40,5 +40,8 @@ function animate(num) {
 
 let animation_smooth_fns = {
     sin: t => { return sin((t * 2 - 1) * HALF_PI) / 2 + 0.5; },
-    linear: t => { return t; }
+    linear: t => { return t; },
+    cub: t => { return t*t*t },
+    inv_cub: t => { t = 1-t; return 1 - t*t*t },
+    step: t => { return Math.round(t * 5) / 5; }
 };

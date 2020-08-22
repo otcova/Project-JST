@@ -1,10 +1,14 @@
+let time = 0;
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     textSize(20);
+    time = performance.now();
     scene_manager.change("start");
 }
 
 function draw() {
+    time = performance.now();
     get_active_scene().draw();
 }
 
