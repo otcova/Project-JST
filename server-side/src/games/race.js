@@ -116,21 +116,23 @@ function init_scene() {
 }
 
 function update_scene() {
-    // let t = 1000;
-    // let n = 0;
-    //     // if(parseInt(timer.time/1000) == 10) {
+    let t = 1000;
+    let n = 0;
+        // if(parseInt(timer.time/1000) == 10) {
             
-    //     //     console.log('hola');
-    //     // }
-    // let last = 0;
-    // if(timer.time -last > 5000){
-    //     last += 5000;
-    //     n += 1;
-    // }
-    // t =  1000 - (n *100);
+        //     console.log('hola');
+        // }
+    let last = 0;
+    if((timer.time - last) > 5000){
+        last  = timer.time;
+        n += 1;
+        console.log(n);
+        
+    }
+    t =  1000 - (n *100);
     
     
-    if (timer.time - last_obstacle_time > 100) {
+    if (timer.time - last_obstacle_time > t) {
         last_obstacle_time = timer.time;
         create_obtacle();
     }
