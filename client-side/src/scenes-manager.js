@@ -6,7 +6,7 @@ scene_manager.change = function (new_scene_name) {
     if (scene_manager.scene_name != new_scene_name) {
         scene_manager.scene_name = new_scene_name;
         get_active_scene().setup();
-    }
+    }   
 }
 
 function keyPressed(event) {

@@ -1,8 +1,6 @@
 let start_scene = create_scene("start");
 
 start_scene.setup = function () {
-    //scene_manager.change("race");
-    //return;
     this.button_conectar = new Button();
     this.button_pause = new Button("right", "bottom");
 

@@ -4,7 +4,8 @@ let player_id_counter = 0;
 let lobby = require("./lobby");
 let game = lobby;
 let games = [
-    require("./games/esquiva")
+    require("./games/esquiva"),
+    require("./games/race")
 ];
 
 const WebSocket = require('ws');

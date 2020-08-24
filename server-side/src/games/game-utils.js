@@ -13,6 +13,21 @@ function init_players(players_list, Matter, engine) {
     log_players(players_list);
 }
 
+function init_players_pos_fix(players_list, Matter, engine, x, y, d) {
+    for (const player of players_list) {
+        player.spectator = false;
+        player.vx = 0;
+        player.vy = 0;
+        if (engine != undefined) {
+            player.body = Matter.Bodies.circle(
+                x,
+                y, d);
+            Matter.World.add(engine.world, player.body);
+        }
+    }
+    log_players(players_list);
+}
+
 function init_engine(Matter, engine) {
     Matter.World.clear(engine.world);
     Matter.Engine.clear(engine);
@@ -86,5 +101,6 @@ module.exports = {
     move_players: move_players,
     update_engine: update_engine,
     log_players: log_players,
-    count_players: count_players
+    count_players: count_players,
+    init_players_pos_fix: init_players_pos_fix
 };

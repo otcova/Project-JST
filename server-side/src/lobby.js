@@ -5,19 +5,19 @@ function start(_players_list) {
     players_list = _players_list;
     last_player_init_data = Date.now();
     for (const player of players_list)
-        player.send({ type: "nova partida", game_name: "esquiva" });
+        player.send({ type: "nova partida", game_name: "race" });
 }
 
 function update() {
     if (players_list.length >= 1) {
-        if (Date.now() - last_player_init_data > 2000) {
-            module.exports.on_close(0);
+        if (Date.now() - last_player_init_data > 500) {
+            module.exports.on_close(1);
         }
     }
 }
 
 function new_player(player) {
-    player.send({ type: "nova partida", game_name: "esquiva" });
+    player.send({ type: "nova partida", game_name: "race" });
     last_player_init_data = Date.now();
 }
 
