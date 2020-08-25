@@ -11,7 +11,6 @@ function draw_players() {
                 fill(255, 100, 100);
             }
             ellipse(player.x, player.y, 5);
-            
         }
     }
 }

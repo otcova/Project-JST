@@ -39,6 +39,9 @@ function update() {
     game_over(players_list);
     
 }
+
+
+
 function game_over(players_list) {
     let players_array = [];
     for (const player of players_list) {
@@ -50,20 +53,16 @@ function game_over(players_list) {
             let cont2 = cont.players;
             if(cont2 == 1){
                 if(players_array[0] < -50) {
-                    //boom(player);
-                } 
-                
+                    close_game();
+                }         
             } else{
                 if(players_array[0] < -50) {
                     player.spectator = true;
                 } 
             }
-            
         }
     }
 }
-
-
 
 
 
@@ -100,7 +99,7 @@ function close_game() {
 function get_player_message(player, message) {
     if (message.type == "set vel") {
         if (message.vx != undefined) player.vx = message.vx;
-        if (message.vy != undefined) player.vy = -message.vy;
+        //if (message.vy != undefined) player.vy = -message.vy;
     } 
 }
 
@@ -116,27 +115,21 @@ function init_scene() {
 }
 
 function update_scene() {
-    let t = 1000;
-    let n = 0;
-        // if(parseInt(timer.time/1000) == 10) {
-            
-        //     console.log('hola');
-        // }
-    let last = 0;
-    if((timer.time - last) > 5000){
-        last  = timer.time;
-        n += 1;
-        console.log(n);
-        
-    }
-    t =  1000 - (n *100);
-    
-    
-    if (timer.time - last_obstacle_time > t) {
-        last_obstacle_time = timer.time;
-        create_obtacle();
-    }
 
+        if(Math.round(timer.time/1000) % 1 == 0) {
+
+            let n = Math.round(timer.time/1000) / 5;
+            let t = 1000 - (n*100);
+            if(t <= 200) {
+                t = 200;
+            }
+          
+            if (timer.time - last_obstacle_time > t) {
+                last_obstacle_time = timer.time;
+                create_obtacle();
+            }
+        }
+    
     move_obstacles();
 }
 
@@ -148,8 +141,18 @@ function create_walls() {
 }
 
 function move_obstacles() {
+
     obstacles.forEach(obstacle => {
-        Matter.Body.setPosition(obstacle.body, { x: obstacle.body.position.x,  y: obstacle.body.position.y - 0.5 })
+        if(Math.round(timer.time/1000) % 1 == 0) {
+
+            let n = Math.round(timer.time/1000) / 5;
+            let v = .25 + (n/10);
+            if(v >= 1) {
+                v = 1;
+            }
+            Matter.Body.setPosition(obstacle.body, { x: obstacle.body.position.x,  y: obstacle.body.position.y - v })
+        }
+        //Matter.Body.setPosition(obstacle.body, { x: obstacle.body.position.x,  y: obstacle.body.position.y - v })
         if (obstacle.y < -60) {
             Matter.World.remove(engine.world, obstacle.body);
             obstacles.delete(obstacle);

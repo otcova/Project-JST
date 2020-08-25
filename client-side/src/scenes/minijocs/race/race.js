@@ -18,15 +18,23 @@ race_scene.draw = function () {
     }
 
     this.draw_wall();
+    this.draw_timer();
 }
-
-
-
 
 race_scene.draw_wall = function () {
     fill(255);
     rect(-60, -50, -60, 100);
     rect(60, -50, 60, 100);
+}
+
+//let conter = utils.create_timer();
+
+//utils.update_timer(utils.create_timer());
+
+race_scene.draw_timer = function() {
+    fill(0);
+    rect(65, 30, 35, 15);
+
 }
 
 race_scene.draw_obstacle = function (obstacle) {
