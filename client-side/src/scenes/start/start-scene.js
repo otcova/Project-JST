@@ -14,7 +14,6 @@ start_scene.draw = function () {
 
     this.draw_rodones();
     this.text_server.draw(width / 2, height / 2 + 80);
-
     this.update_button_pause();
     this.update_button_conectar();
 }

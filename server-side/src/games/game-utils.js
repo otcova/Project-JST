@@ -37,6 +37,8 @@ function create_timer() {
     return { start: Date.now(), time: 0, delta: 10 };
 }
 
+
+
 function update_timer(timer) {
     if (timer.time == 0) {
         timer.time = Date.now() - timer.start;
@@ -103,4 +105,5 @@ module.exports = {
     log_players: log_players,
     count_players: count_players,
     init_players_pos_fix: init_players_pos_fix
+    
 };

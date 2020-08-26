@@ -17,6 +17,14 @@ class InputText {
         text(this.text, x, y, w, h);
     }
 
+    draw2(x, y, w, h) {
+        fill(255);
+        rect(x, y, w, h);
+        
+        this.text_style();
+        text(this.text, x, y, w, h);
+    }
+
     get_default_size() {
         let w = textWidth(this.text) + 60;
         let h = textAscent() + 40;
@@ -35,6 +43,6 @@ class InputText {
     }
 
     on_backspace_pressed() {
-        this.text = this.text.slice(0, -1);
+        this.text = this.text.slice(0, 1);
     }
 }

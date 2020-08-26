@@ -17,6 +17,7 @@ function start(_players_list) {
     
 }
 
+
 // function boom(player) {
 //     let d = 0;
 
@@ -26,6 +27,7 @@ function start(_players_list) {
 //     utils.init_players_pos_fix(player, Matter, engine, player.x, player.y, d)
     
 // }
+
 
 
 function update() {
@@ -39,8 +41,6 @@ function update() {
     game_over(players_list);
     
 }
-
-
 
 function game_over(players_list) {
     let players_array = [];
@@ -112,6 +112,7 @@ function init_scene() {
     obstacles = new Set();
     last_obstacle_time = 0;
     create_walls();
+    
 }
 
 function update_scene() {
@@ -143,20 +144,24 @@ function create_walls() {
 function move_obstacles() {
 
     obstacles.forEach(obstacle => {
-        if(Math.round(timer.time/1000) % 1 == 0) {
-
-            let n = Math.round(timer.time/1000) / 5;
-            let v = .25 + (n/10);
-            if(v >= 1) {
-                v = 1;
-            }
-            Matter.Body.setPosition(obstacle.body, { x: obstacle.body.position.x,  y: obstacle.body.position.y - v })
-        }
+        
         //Matter.Body.setPosition(obstacle.body, { x: obstacle.body.position.x,  y: obstacle.body.position.y - v })
         if (obstacle.y < -60) {
             Matter.World.remove(engine.world, obstacle.body);
             obstacles.delete(obstacle);
         }
+        // if(!this.paused) {
+        //     Matter.Body.setPosition(obstacle.body, { x: obstacle.body.position.x,  y: obstacle.body.position.y - 0 })
+        // } else{
+            if(Math.round(timer.time/1000) % 1 == 0) {
+
+                let n = Math.round(timer.time/1000) / 5;
+                let v = .25 + (n/10);
+                if(v >= 1) {
+                    v = 1;
+                }
+                Matter.Body.setPosition(obstacle.body, { x: obstacle.body.position.x,  y: obstacle.body.position.y - v })
+            }
     });
 }
 
